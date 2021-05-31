@@ -1,8 +1,29 @@
-$red: red;
-$pink: pink;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import "~normalize.css";
+
+@import "header";
+@import "toolbar";
+@import "formula";
+@import "table";
+@import "dashboard";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-    background-color: $pink;
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.exel {
+  position: relative;
+  color: $color-base-gray;
+  height: 100%;
+  max-width: 100%;
+  font-size: .8rem ;
 }
 
 
