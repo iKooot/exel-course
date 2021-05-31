@@ -1,3 +1,4 @@
+/*
 const { async } = require('regenerator-runtime');
 
 console.log('module.js');
@@ -7,3 +8,5 @@ async function start() {
 }
 
 start().then(console.log)
+
+*/
