@@ -3,21 +3,31 @@ const CODES = {
   Z: 90,
 }
 
-function toCell(content = '') {
+function toCell(content = '', column) {
   return `
-    <div class="cell" contenteditable="true">
+    <div class="cell" data-column="${column + 1}" contenteditable>
       ${content}
     </div>`
 }
 
-function toColumn(col) {
-  return `<div class="column">${col}</div>`
+function toColumn(col, index) {
+  return `
+    <div class="column" data-type="resizeble" data-column="${index + 1}">
+      ${col}
+      <div class="col-resize" data-resize="col"></div>
+    </div>
+  `
 }
 
 function createRow(content, index) {
+  const resize = index ? '<div class="row-resize" data-resize="row"></div>' : ''
+
   return `
-    <div class="row">
-      <div class="row-info">${index ? index : ''}</div>
+    <div class="row" data-type="resizeble">
+      <div class="row-info">
+        ${index ? index : ''}
+        ${resize}
+      </div>
       <div class="row-data">${content}</div>
     </div>
   `
@@ -37,17 +47,17 @@ export function createTable(rowsCount = 33) {
   const rows = []
   //формируем колонки первой строки и заполняем их буквами
 
-  const cols = new Array(colsCount).fill('').map(toChar).map(element => {
+  const cols = new Array(colsCount).fill('').map(toChar).map((element, index) => {
     //снова разбираем на массив и с помощью функции криейт солс формируем html колонки
-    return toColumn(element)
+    return toColumn(element, index)
   }).join('')
 
   //создаем контент строк
-  rows.push(createRow(cols))
+  rows.push(createRow(cols, null))
   //отрисовываем базовое коллисечтво строк
   for (let i = 0; i < rowsCount; i++) {
     //создаем ячейки
-    const cells = new Array(colsCount).fill('').map(element => toCell()).join('')
+    const cells = new Array(colsCount).fill('').map((element, index) => toCell('', index)).join('')
     //пушим в массив строк
     rows.push(createRow(cells, i + 1))
   }

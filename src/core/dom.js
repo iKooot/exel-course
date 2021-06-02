@@ -45,12 +45,37 @@ class Dom {
 
     return this
   }
+  // пишем вой квери селектор олл
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector)
+  }
+  // ищем ближайшего родителя
+  closest(selector) {
+    //метод клосест вернет нативный элемент а мы хотим работать в обертке нашего ДОМА поэтому this  мы оборачиваем в конструктор $()
+    return $(this.$el.closest(selector))
+  }
+  //создаем у нашего ДОМА функцию поиска координат
+  getCoords() {
+    return this.$el.getBoundingClientRect()
+  }
+  //создаем метод для получения дата атрибутов. Создаем геттер
+  get data() {
+    return this.$el.dataset
+  }
+  //создаем свой стайл
+  css(styles = {}) {
+    //получаем ключи обьекта и назначаем новые инлайновые стили через фор ич. Так как свойств может быть много
+    Object.keys(styles).forEach(key => {
+      return this.$el.style[key] = styles[key]
+    })
+  }
 }
 
 export function $(selector) {
   return new Dom(selector)
 }
 
+//создаем функцию, которая будет возвращать дом элементы
 $.create = (tagName, classes = '') => {
   const el = document.createElement(tagName)
 
