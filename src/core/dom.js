@@ -27,6 +27,10 @@ class Dom {
   on(eventType, callback) {
     this.$el.addEventListener(eventType, callback)
   }
+  //сщздаем свой метод удаление слушателей
+  off(eventType, callback) {
+    this.$el.removeEventListener(eventType, callback)
+  }
   //создаем полифил с собственным методом append
   append(node) {
     if (node instanceof Dom) {

@@ -19,13 +19,19 @@ export class DOMListener {
         const name = this.name || ''
         throw new Error(`Method ${method} is not implemented in ${name} Component`)
       }
+      //при создании функции лисенера через байн мы создаем всегда НОВУЮ функцию поэтому ремув не работает так как в новой функции новый контекст и removeListener не работает! Для этого мы переопределяем контекст для каждого метода
+      this[method] = this[method].bind(this)
       //тоже самое что и addEventListener. Через this[method] мы обращаемся к инстансу
-      this.$root.on(listener, this[method].bind(this))
+      this.$root.on(listener, this[method])
     })
   }
 
   removeDOMListeners() {
-
+    this.listeners.forEach(listener => {
+      const method = getMethodName(listener)
+      //тоже самое что и removeEventListener. Через this[method] мы обращаемся к инстансу и удаляем прослушку. Конткст функции мы определеили ущу при создании
+      this.$root.off(listener, this[method])
+    })
   }
 }
 

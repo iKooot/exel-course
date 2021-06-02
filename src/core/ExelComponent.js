@@ -14,4 +14,8 @@ export class ExelComponent extends DOMListener {
   init() {
     this.initDOMListeners()
   }
+  //метод для удаление прослушек
+  destroy() {
+    this.removeDOMListeners()
+  }
 }
