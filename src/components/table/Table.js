@@ -11,7 +11,7 @@ export class Table extends ExelComponent {
   constructor($root, option) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'keydown', 'input'],
+      listeners: ['mousedown', 'keydown', 'input', 'click'],
       //набор опций, которые мы принимаем вторым параметром и раскрываем их для род. элемента
       ...option,
     })
@@ -92,6 +92,10 @@ export class Table extends ExelComponent {
   }
 
   onInput(event) {
+    this.$emit('table:input', $(event.target))
+  }
+
+  onClick(event) {
     this.$emit('table:input', $(event.target))
   }
 }
