@@ -18,6 +18,17 @@ class Dom {
     //если мы не передали в него строку это сеттер, он вернет то что находится в html сущности
     return this.$el.outerHTML.trim()
   }
+  //создаем метод добавления текста
+  text(text) {
+    if (typeof text === 'string') {
+      this.$el.textContent = text
+      return this
+    }
+    if (this.$el.tagName.toLowerCase() === 'input') {
+      return this.$el.value.trim()
+    }
+    return this.$el.textContent.trim()
+  }
   //создаем метод очистки содержимого хтмл
   clear() {
     this.html('')
@@ -45,6 +56,10 @@ class Dom {
 
     return this
   }
+  //пишем квери селектор и сразуже обарачиваем его в конструктор класса ДОМ
+  find(selector) {
+    return $(this.$el.querySelector(selector))
+  }
   // пишем вой квери селектор олл
   findAll(selector) {
     return this.$el.querySelectorAll(selector)
@@ -53,6 +68,14 @@ class Dom {
   closest(selector) {
     //метод клосест вернет нативный элемент а мы хотим работать в обертке нашего ДОМА поэтому this  мы оборачиваем в конструктор $()
     return $(this.$el.closest(selector))
+  }
+  //создаем свой класс эдд
+  addClass(className) {
+    return this.$el.classList.add(className)
+  }
+  //создаем свой класс ремув
+  removeClass(className) {
+    return this.$el.classList.remove(className)
   }
   //создаем у нашего ДОМА функцию поиска координат
   getCoords() {
@@ -68,6 +91,22 @@ class Dom {
     Object.keys(styles).forEach(key => {
       return this.$el.style[key] = styles[key]
     })
+  }
+  //создаем метод для помощи поиска по айдишникам дата атрибута
+  id(parse) {
+    if (parse) {
+      const parsed = this.id().split(':')
+      return {
+        col: parsed[0],
+        row: +parsed[1],
+      }
+    }
+    return this.data.id
+  }
+  //добавляем инстанс фокус
+  focus() {
+    this.$el.focus()
+    return this
   }
 }
 
